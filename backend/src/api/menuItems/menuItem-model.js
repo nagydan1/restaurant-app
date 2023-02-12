@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
 const MenuItemSchema = new mongoose.Schema({
-  spanish: {
+  name: {
     type: String,
     required: true,
   },
-  english: {
+  description: {
     type: String,
     required: true,
   },

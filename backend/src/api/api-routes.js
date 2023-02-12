@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
-import menuItems from './menuItems/MenuItem-routes';
+import menuItems from './menuItems/menuItem-routes';
 
 const router = express.Router();
 
