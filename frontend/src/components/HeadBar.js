@@ -9,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import TapasIcon from '@mui/icons-material/Tapas';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 
-export default function HeadBar() {
+function HeadBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -41,3 +41,5 @@ export default function HeadBar() {
     </Box>
   );
 }
+
+export default HeadBar;
