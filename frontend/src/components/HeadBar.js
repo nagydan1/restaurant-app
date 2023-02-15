@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,9 +12,15 @@ import TapasIcon from '@mui/icons-material/Tapas';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 
 function HeadBar() {
+  let cartCount = 0;
+  const cartCountArray = useSelector((state) => state.cart.map((cartItem) => cartItem.quantity));
+  if (cartCountArray.length !== 0) {
+    cartCount = cartCountArray.reduce((a, b) => a + b);
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             size="large"
@@ -29,10 +37,11 @@ function HeadBar() {
           </Typography>
           <IconButton
             size="large"
-            aria-label="show 17 new notifications"
             color="inherit"
+            component={NavLink}
+            to="/cart"
           >
-            <Badge badgeContent={1} color="error">
+            <Badge badgeContent={cartCount} color="error">
               <ShoppingBasketIcon />
             </Badge>
           </IconButton>

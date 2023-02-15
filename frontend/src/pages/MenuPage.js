@@ -8,8 +8,8 @@ import { loadMenu } from '../store/menu';
 
 function MenuPage() {
   const dispatch = useDispatch();
-  const menu = useSelector((state) => state.menuItems);
-  const loading = useSelector((state) => state.loading);
+  const menu = useSelector((state) => state.menu.menuItems);
+  const loading = useSelector((state) => state.menu.loading);
 
   useEffect(() => {
     dispatch(loadMenu());
@@ -18,7 +18,7 @@ function MenuPage() {
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="md">
+      <Container maxWidth="md" sx={{ pt: 8 }}>
         {(loading)
           ? <Spinner />
           : menu.map((item) => <MenuItem item={item} key={item._id} />)}

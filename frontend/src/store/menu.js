@@ -12,16 +12,16 @@ const slice = createSlice({
     lastFetch: null,
   },
   reducers: {
-    menuRequested: (state) => {
-      state.loading = true;
+    menuRequested: (menu) => {
+      menu.loading = true;
     },
-    menuRecieved: (state, action) => {
-      state.menuItems = action.payload.menuItems;
-      state.loading = false;
-      state.lastFetch = Date.now();
+    menuRecieved: (menu, action) => {
+      menu.menuItems = action.payload.menuItems;
+      menu.loading = false;
+      menu.lastFetch = Date.now();
     },
-    menuRequestFailed: (state) => {
-      state.loading = false;
+    menuRequestFailed: (menu) => {
+      menu.loading = false;
     },
   },
 });
@@ -32,7 +32,7 @@ export default slice.reducer;
 const { menuRecieved, menuRequested, menuRequestFailed } = slice.actions;
 
 export const loadMenu = () => (dispatch, getState) => {
-  const { lastFetch } = getState();
+  const { lastFetch } = getState().menu;
   const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
   if (diffInMinutes < 100) return;
 

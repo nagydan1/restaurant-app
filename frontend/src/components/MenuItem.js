@@ -1,11 +1,15 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { itemAdded } from '../store/cart';
 
 function MenuItem({ item }) {
+  const dispatch = useDispatch();
+
   return (
     <Card sx={{ minWidth: 275, my: 2 }}>
       <CardContent>
@@ -21,7 +25,14 @@ function MenuItem({ item }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Add to cart</Button>
+        <Button
+          size="small"
+          onClick={() => dispatch(itemAdded({
+            menuItemId: item._id,
+          }))}
+        >
+          Add to cart
+        </Button>
       </CardActions>
     </Card>
   );
