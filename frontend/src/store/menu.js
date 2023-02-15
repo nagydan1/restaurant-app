@@ -7,10 +7,18 @@ const slice = createSlice({
   name: 'menu',
   initialState: {
     menuItems: [],
+    loading: false,
   },
   reducers: {
+    menuRequested: (state) => {
+      state.loading = true;
+    },
     menuRecieved: (state, action) => {
       state.menuItems = action.payload.menuItems;
+      state.loading = false;
+    },
+    menuRequestFailed: (state) => {
+      state.loading = false;
     },
   },
 });
@@ -18,8 +26,12 @@ const slice = createSlice({
 export default slice.reducer;
 
 // Action Creators
+const { menuRecieved, menuRequested, menuRequestFailed } = slice.actions;
+
 export const loadMenu = () => apiCallBegan({
   url: MENU_URL,
   method: 'GET',
-  onSuccess: slice.actions.menuRecieved.type,
+  onStart: menuRequested.type,
+  onSuccess: menuRecieved.type,
+  onError: menuRequestFailed.type,
 });
