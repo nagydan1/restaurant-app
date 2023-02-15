@@ -19,7 +19,7 @@ const menuItems = [
   },
   {
     name: 'Croquetas',
-    description: 'Home-mad croquettes filled with chicken',
+    description: 'Home-made croquettes filled with chicken',
     category: 'starter',
     price: 7.00,
   },
