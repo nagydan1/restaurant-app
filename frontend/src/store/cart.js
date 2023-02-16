@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
@@ -15,8 +16,26 @@ const slice = createSlice({
         });
       }
     },
+    quantityIncremented: (cart, action) => {
+      const cartItem = cart.find((item) => item.menuItemId === action.payload.menuItemId);
+      cartItem.quantity += 1;
+    },
+    quantityDecremented: (cart, action) => {
+      const cartItem = cart.find((item) => item.menuItemId === action.payload.menuItemId);
+      if (cartItem.quantity > 1) cartItem.quantity -= 1;
+    },
+    itemRemoved: (cart, action) => {
+      const cartItem = cart.find((item) => item.menuItemId === action.payload.menuItemId);
+      const index = cart.indexOf(cartItem);
+      cart.splice(index, 1);
+    },
+    allItemsRemoved: (cart) => {
+      cart.splice(0);
+    },
   },
 });
 
-export const { itemAdded } = slice.actions;
+export const {
+  itemAdded, quantityIncremented, quantityDecremented, itemRemoved, allItemsRemoved,
+} = slice.actions;
 export default slice.reducer;

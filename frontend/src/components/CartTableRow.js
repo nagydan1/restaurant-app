@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import { quantityIncremented, quantityDecremented, itemRemoved } from '../store/cart';
 
 function CartTableRow({ item }) {
+  const dispatch = useDispatch();
   const cartItem = useSelector((state) => state.menu.menuItems)
     .find((menuItem) => menuItem._id === item.menuItemId);
 
@@ -18,7 +20,12 @@ function CartTableRow({ item }) {
       </TableCell>
       <TableCell align="center">
         <ButtonGroup size="small">
-          <Button key="one">
+          <Button
+            key="one"
+            onClick={() => dispatch(quantityDecremented({
+              menuItemId: cartItem._id,
+            }))}
+          >
             -
           </Button>
           <Button
@@ -33,14 +40,27 @@ function CartTableRow({ item }) {
           >
             {item.quantity}
           </Button>
-          <Button key="three">
+          <Button
+            key="three"
+            onClick={() => dispatch(quantityIncremented({
+              menuItemId: cartItem._id,
+            }))}
+          >
             +
           </Button>
         </ButtonGroup>
       </TableCell>
       <TableCell align="center">{`€ ${cartItem.price * item.quantity}`}</TableCell>
       <TableCell align="center">
-        <Button size="small" color="error">Remove</Button>
+        <Button
+          size="small"
+          color="error"
+          onClick={() => dispatch(itemRemoved({
+            menuItemId: cartItem._id,
+          }))}
+        >
+          Remove
+        </Button>
       </TableCell>
     </TableRow>
   );

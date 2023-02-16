@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import { allItemsRemoved } from '../store/cart';
 
 function CartTotalRow({ cart }) {
+  const dispatch = useDispatch();
   const menu = useSelector((state) => state.menu.menuItems);
   const cartItemIds = cart.map((cartItem) => cartItem.menuItemId);
   const cartItemQuantities = cart.map((cartItem) => cartItem.quantity);
@@ -23,7 +25,13 @@ function CartTotalRow({ cart }) {
       <TableCell align="center" sx={{ fontWeight: 'bold' }}>{totalQuantity}</TableCell>
       <TableCell align="center" sx={{ fontWeight: 'bold' }}>{`€ ${totalPrice}`}</TableCell>
       <TableCell align="center">
-        <Button size="small" color="error">Remove all</Button>
+        <Button
+          size="small"
+          color="error"
+          onClick={() => dispatch(allItemsRemoved())}
+        >
+          Remove all
+        </Button>
       </TableCell>
     </TableRow>
   );
