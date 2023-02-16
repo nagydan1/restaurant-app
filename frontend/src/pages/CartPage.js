@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Table from '@mui/material/Table';
@@ -11,8 +13,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CartTableRow from '../components/CartTableRow';
 import CartTotalRow from '../components/CartTotalRow';
+import { sendOrder } from '../store/cart';
 
 function CartPage() {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
   return (
@@ -37,6 +41,20 @@ function CartPage() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Button
+          size="large"
+          onClick={() => dispatch(sendOrder())}
+        >
+          Send order
+        </Button>
+        <Button
+          size="large"
+          color="error"
+          component={NavLink}
+          to="/"
+        >
+          BACK TO MENU
+        </Button>
       </Container>
     </>
   );

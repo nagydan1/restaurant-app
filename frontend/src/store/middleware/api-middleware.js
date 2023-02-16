@@ -5,7 +5,7 @@ const api = (state) => (next) => async (action) => {
   if (action.type !== actions.apiCallBegan.type) return next(action);
 
   const {
-    url, method, onStart, onSuccess, onError,
+    url, method, body, onStart, onSuccess, onError,
   } = action.payload;
 
   if (onStart) state.dispatch({ type: onStart });
@@ -14,6 +14,7 @@ const api = (state) => (next) => async (action) => {
   try {
     const response = await fetch(url, {
       method,
+      body,
       headers: {
         'Content-Type': 'application/json',
       },

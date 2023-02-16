@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+import { apiCallBegan } from './api';
+import { ORDER_URL } from '../constants';
 
 const slice = createSlice({
   name: 'cart',
@@ -39,3 +41,14 @@ export const {
   itemAdded, quantityIncremented, quantityDecremented, itemRemoved, allItemsRemoved,
 } = slice.actions;
 export default slice.reducer;
+
+// Action Creators
+export const sendOrder = () => (dispatch, getState) => {
+  dispatch(
+    apiCallBegan({
+      url: ORDER_URL,
+      method: 'POST',
+      body: JSON.stringify({ cart: getState().cart }),
+    }),
+  );
+};
