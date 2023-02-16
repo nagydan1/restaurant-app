@@ -6,9 +6,8 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
 function CartTableRow({ item }) {
-  const [cartItem] = useSelector((state) => state.menu.menuItems.filter(
-    (menuItem) => menuItem._id === item.menuItemId,
-  ));
+  const cartItem = useSelector((state) => state.menu.menuItems)
+    .find((menuItem) => menuItem._id === item.menuItemId);
 
   return (
     <TableRow

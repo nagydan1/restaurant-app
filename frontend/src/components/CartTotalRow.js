@@ -5,30 +5,15 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
 function CartTotalRow({ cart }) {
-  let totalQuantity = 0;
-  const cartItemQuantities = cart.map((cartItem) => cartItem.quantity);
-  if (cartItemQuantities.length !== 0) {
-    totalQuantity = cartItemQuantities.reduce((a, b) => a + b);
-  }
-
-  const cartItemIds = cart.map((cartItem) => cartItem.menuItemId);
   const menu = useSelector((state) => state.menu.menuItems);
-  const cartItemPrices = [];
-  cartItemIds.forEach((id) => {
-    const [menuItem] = menu.filter((item) => item._id === id);
-    cartItemPrices.push(menuItem.price);
-  });
+  const cartItemIds = cart.map((cartItem) => cartItem.menuItemId);
+  const cartItemQuantities = cart.map((cartItem) => cartItem.quantity);
+  const cartItemPrices = cartItemIds.map((id) => menu.find((item) => item._id === id).price);
 
-  const cartPrices = [];
-  let totalPrice = 0;
-  for (let i = 0; i < cartItemQuantities.length; i += 1) {
-    console.log(cartItemPrices);
-    console.log(cartItemQuantities);
-    cartPrices.push(cartItemQuantities[i] * cartItemPrices[i]);
-  }
-  if (cartItemPrices.length !== 0) {
-    totalPrice = cartPrices.reduce((a, b) => a + b);
-  }
+  const totalQuantity = cartItemQuantities.reduce((a, b) => a + b, 0);
+  const totalPrice = cartItemQuantities
+    .map((quantity, index) => quantity * cartItemPrices[index])
+    .reduce((a, b) => a + b, 0);
 
   return (
     <TableRow

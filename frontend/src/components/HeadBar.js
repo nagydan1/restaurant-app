@@ -12,11 +12,9 @@ import TapasIcon from '@mui/icons-material/Tapas';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 
 function HeadBar() {
-  let cartCount = 0;
-  const cartCountArray = useSelector((state) => state.cart.map((cartItem) => cartItem.quantity));
-  if (cartCountArray.length !== 0) {
-    cartCount = cartCountArray.reduce((a, b) => a + b);
-  }
+  const cartCount = useSelector((state) => state.cart
+    .map((cartItem) => cartItem.quantity))
+    .reduce((a, b) => a + b, 0);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
