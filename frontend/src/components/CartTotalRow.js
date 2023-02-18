@@ -5,11 +5,11 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { allItemsRemoved } from '../store/cart';
 
-function CartTotalRow({ cart }) {
+function CartTotalRow({ items }) {
   const dispatch = useDispatch();
   const menu = useSelector((state) => state.menu.menuItems);
-  const cartItemIds = cart.map((cartItem) => cartItem.menuItemId);
-  const cartItemQuantities = cart.map((cartItem) => cartItem.quantity);
+  const cartItemIds = items.map((cartItem) => cartItem.menuItemId);
+  const cartItemQuantities = items.map((cartItem) => cartItem.quantity);
   const cartItemPrices = cartItemIds.map((id) => menu.find((item) => item._id === id).price);
 
   const totalQuantity = cartItemQuantities.reduce((a, b) => a + b, 0);
