@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -13,11 +13,23 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CartTableRow from '../components/CartTableRow';
 import CartTotalRow from '../components/CartTotalRow';
-import { sendOrder } from '../store/cart';
+import FeedbackBar from '../components/FeedbackBar';
+import { resetFeedback, sendOrder } from '../store/cart';
 
 function CartPage() {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
+  const { items, feedback } = useSelector((state) => state.cart);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(feedback).length) setOpen(true);
+  }, [feedback]);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setOpen(false);
+    setTimeout(() => dispatch(resetFeedback()), 1000);
+  };
 
   return (
     <>
@@ -34,14 +46,15 @@ function CartPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {cart.map((item) => (
+              {items.map((item) => (
                 <CartTableRow item={item} key={item.menuItemId} />
               ))}
-              <CartTotalRow cart={cart} />
+              <CartTotalRow items={items} />
             </TableBody>
           </Table>
         </TableContainer>
         <Button
+          disabled={!items.length}
           size="large"
           onClick={() => dispatch(sendOrder())}
         >
@@ -53,9 +66,15 @@ function CartPage() {
           component={NavLink}
           to="/"
         >
-          BACK TO MENU
+          Back to menu
         </Button>
       </Container>
+      <FeedbackBar
+        open={open}
+        severity={feedback.severity}
+        message={feedback.message}
+        handleClose={handleClose}
+      />
     </>
   );
 }
