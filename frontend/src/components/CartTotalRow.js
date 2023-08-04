@@ -19,12 +19,33 @@ function CartTotalRow({ items }) {
 
   return (
     <TableRow
-      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+      sx={{
+        '&:last-child td, &:last-child th': { border: 0 },
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+      }}
     >
-      <TableCell component="th" scope="row" sx={{ fontWeight: 'bold' }}>Total</TableCell>
-      <TableCell align="center" sx={{ fontWeight: 'bold' }}>{totalQuantity}</TableCell>
-      <TableCell align="center" sx={{ fontWeight: 'bold' }}>{`€ ${totalPrice}`}</TableCell>
-      <TableCell align="center">
+      <TableCell component="th" scope="row" sx={{ fontWeight: 'bold', minWidth: 270 }}>Total</TableCell>
+      <TableCell
+        align="center"
+        sx={{
+          fontWeight: 'bold', flexShrink: 1, minWidth: 120, px: 6,
+        }}
+      >
+        {
+          (totalQuantity < 2) ? `${totalQuantity} item` : `${totalQuantity} items`
+        }
+      </TableCell>
+      <TableCell
+        align="center"
+        sx={{
+          fontWeight: 'bold', flexGrow: 1, minWidth: 120,
+        }}
+      >
+        {`${totalPrice.toFixed(2)} €`}
+      </TableCell>
+      <TableCell align="center" sx={{ flexGrow: 1, minWidth: 120 }}>
         <Button
           size="small"
           color="error"

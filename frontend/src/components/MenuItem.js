@@ -20,8 +20,7 @@ function MenuItem({ item }) {
           {item.description}
         </Typography>
         <Typography variant="body2">
-          €
-          {item.price}
+          {`${item.price.toFixed(2)} €`}
         </Typography>
       </CardContent>
       <CardActions>

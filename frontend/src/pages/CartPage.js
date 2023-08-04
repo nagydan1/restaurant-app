@@ -34,15 +34,12 @@ function CartPage() {
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="md" sx={{ pt: 8 }}>
+      <Container maxWidth="md" sx={{ py: 8 }}>
         <TableContainer component={Paper} sx={{ my: 2 }}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Plate</TableCell>
-                <TableCell align="center">Quantity</TableCell>
-                <TableCell align="center">Price</TableCell>
-                <TableCell />
+                <TableCell>Your order</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

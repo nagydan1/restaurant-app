@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducer';
 import api from './middleware/api-middleware';
