@@ -30,7 +30,7 @@ function CartTotalRow({ items }) {
       <TableCell
         align="center"
         sx={{
-          fontWeight: 'bold', flexShrink: 1, minWidth: 120, px: 6,
+          fontWeight: 'bold', flexShrink: 1, minWidth: 120, px: 7,
         }}
       >
         {

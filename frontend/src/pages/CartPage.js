@@ -19,15 +19,15 @@ import { resetFeedback, sendOrder } from '../store/cart';
 function CartPage() {
   const dispatch = useDispatch();
   const { items, feedback } = useSelector((state) => state.cart);
-  const [open, setOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
 
   useEffect(() => {
-    if (Object.keys(feedback).length) setOpen(true);
+    if (Object.keys(feedback).length) setFeedbackOpen(true);
   }, [feedback]);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return;
-    setOpen(false);
+    setFeedbackOpen(false);
     setTimeout(() => dispatch(resetFeedback()), 1000);
   };
 
@@ -67,7 +67,7 @@ function CartPage() {
         </Button>
       </Container>
       <FeedbackBar
-        open={open}
+        open={feedbackOpen}
         severity={feedback.severity}
         message={feedback.message}
         handleClose={handleClose}

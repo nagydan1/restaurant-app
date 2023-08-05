@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,9 +8,12 @@ import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
 import TapasIcon from '@mui/icons-material/Tapas';
+import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import { drawerToggle } from '../store/ui';
 
 function HeadBar() {
+  const dispatch = useDispatch();
   const cartCount = useSelector((state) => state.cart.items
     .map((cartItem) => cartItem.quantity))
     .reduce((a, b) => a + b, 0);
@@ -19,6 +22,18 @@ function HeadBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={() => dispatch(drawerToggle({
+              drawerOpen: true,
+            }))}
+          >
+            <MenuIcon />
+          </IconButton>
           <TapasIcon sx={{ mr: 1 }} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             San Telmo Tavern
