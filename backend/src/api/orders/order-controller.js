@@ -1,6 +1,14 @@
 import orderService from './order-service';
 
 const orderController = {
+  async get(req, res, next) {
+    try {
+      const orders = await orderService.getOrders();
+      res.status(200).json({ orders });
+    } catch (error) {
+      next(error);
+    }
+  },
   async post(req, res, next) {
     try {
       const isSaved = await orderService.createOrder(req);

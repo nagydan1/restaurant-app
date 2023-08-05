@@ -3,6 +3,9 @@ import Order from './order-model';
 import HttpError from '../../utils/HttpError';
 
 const orderService = {
+  getOrders() {
+    return Order.find({});
+  },
   async createOrder(req) {
     const { cart } = req.body;
 
