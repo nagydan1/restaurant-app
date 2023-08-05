@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 import moment from 'moment';
 import { apiCallBegan } from './api';
 import { MENU_URL } from '../constants';
@@ -27,6 +27,12 @@ const slice = createSlice({
 });
 
 export default slice.reducer;
+
+// Selectors
+export const getMenuItemById = (menuItemId) => createSelector(
+  (menu) => menu.menuItems,
+  (menuItems) => menuItems.filter((menuItem) => menuItem._id === menuItemId),
+);
 
 // Action Creators
 const { menuRecieved, menuRequested, menuRequestFailed } = slice.actions;
