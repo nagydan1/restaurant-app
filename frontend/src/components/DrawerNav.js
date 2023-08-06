@@ -8,16 +8,14 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Badge from '@mui/material/Badge';
-import { RestaurantMenu, ShoppingBasket, ReceiptLong } from '@mui/icons-material';
+import { RestaurantMenu, ReceiptLong } from '@mui/icons-material';
+import CartIcon from './CartIcon';
 import { drawerToggle } from '../store/ui';
 
 function DrawerNav() {
   const dispatch = useDispatch();
   const { drawerOpen } = useSelector((state) => state.ui);
-  const cartCount = useSelector((state) => state.cart.items
-    .map((cartItem) => cartItem.quantity))
-    .reduce((a, b) => a + b, 0);
+
   return (
     <Drawer
       anchor="left"
@@ -48,9 +46,7 @@ function DrawerNav() {
           <ListItem disablePadding>
             <ListItemButton component={NavLink} to="/cart">
               <ListItemIcon>
-                <Badge badgeContent={cartCount} color="error">
-                  <ShoppingBasket />
-                </Badge>
+                <CartIcon />
               </ListItemIcon>
               <ListItemText primary="Cart" />
             </ListItemButton>
