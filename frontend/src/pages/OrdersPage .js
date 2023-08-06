@@ -11,7 +11,9 @@ import { loadMenu } from '../store/menu';
 
 function OrdersPage() {
   const dispatch = useDispatch();
-  const { orderItems, loading, feedback } = useSelector((state) => state.order);
+  const {
+    orderItems, loading, feedback, lastFetch,
+  } = useSelector((state) => state.order);
   const isMenuFetched = useSelector((state) => state.menu.lastFetch);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
 
@@ -44,7 +46,11 @@ function OrdersPage() {
             />
           ))}
         {(!orderItems.length && !loading)
-          && <Alert severity="error" sx={{ my: 2 }}> There isn&apos;t any order.</Alert>}
+          && (
+          <Alert severity="error" sx={{ my: 2 }}>
+            {(lastFetch) ? 'There isn\'t any saved order.' : 'The server is unavailable at the moment. Try again later.'}
+          </Alert>
+          )}
       </Container>
       <FeedbackBar
         open={feedbackOpen}

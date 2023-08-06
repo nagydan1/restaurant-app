@@ -8,6 +8,7 @@ const slice = createSlice({
   initialState: {
     orderItems: [],
     loading: false,
+    lastFetch: null,
     feedback: {},
   },
   reducers: {
