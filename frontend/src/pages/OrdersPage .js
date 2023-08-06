@@ -11,9 +11,10 @@ import { loadMenu } from '../store/menu';
 
 function OrdersPage() {
   const dispatch = useDispatch();
-  const {
-    orderItems, loading, feedback, lastFetch,
-  } = useSelector((state) => state.order);
+  const orderItems = useSelector((state) => state.order.orderItems);
+  const loading = useSelector((state) => state.order.loading);
+  const feedback = useSelector((state) => state.order.feedback);
+  const lastFetch = useSelector((state) => state.order.lastFetch);
   const isMenuFetched = useSelector((state) => state.menu.lastFetch);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
 

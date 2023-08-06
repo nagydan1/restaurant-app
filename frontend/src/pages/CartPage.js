@@ -18,7 +18,8 @@ import { resetFeedback, sendOrder } from '../store/cart';
 
 function CartPage() {
   const dispatch = useDispatch();
-  const { items, feedback } = useSelector((state) => state.cart);
+  const items = useSelector((state) => state.cart.items);
+  const feedback = useSelector((state) => state.cart.feedback);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
 
   useEffect(() => {

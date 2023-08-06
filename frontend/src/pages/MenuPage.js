@@ -9,7 +9,8 @@ import { loadMenu } from '../store/menu';
 
 function MenuPage() {
   const dispatch = useDispatch();
-  const { menuItems, loading } = useSelector((state) => state.menu);
+  const menuItems = useSelector((state) => state.menu.menuItems);
+  const loading = useSelector((state) => state.menu.loading);
 
   useEffect(() => {
     dispatch(loadMenu());

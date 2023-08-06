@@ -2,11 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Badge from '@mui/material/Badge';
 import ShoppingBasket from '@mui/icons-material/ShoppingBasket';
+import { getCartCount } from '../store/cart';
 
 function CartIcon() {
-  const cartCount = useSelector((state) => state.cart.items
-    .map((cartItem) => cartItem.quantity))
-    .reduce((a, b) => a + b, 0);
+  const cartCount = getCartCount(useSelector((state) => state.cart.items));
 
   return (
     <Badge badgeContent={cartCount} color="error">

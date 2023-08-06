@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { apiCallBegan } from './api';
 import { ORDER_URL } from '../constants';
 
@@ -61,6 +61,12 @@ export const {
   itemAdded, quantityIncremented, quantityDecremented, itemRemoved, allItemsRemoved, resetFeedback,
 } = slice.actions;
 export default slice.reducer;
+
+// Selectors
+export const getCartCount = createSelector(
+  (cartItems) => cartItems.map((cartItem) => cartItem.quantity),
+  (quantities) => quantities.reduce((a, b) => a + b, 0),
+);
 
 // Action Creators
 const { cartSaved, cartSaveFailed } = slice.actions;

@@ -14,7 +14,7 @@ import { drawerToggle } from '../store/ui';
 
 function DrawerNav() {
   const dispatch = useDispatch();
-  const { drawerOpen } = useSelector((state) => state.ui);
+  const drawerOpen = useSelector((state) => state.ui.drawerOpen);
 
   return (
     <Drawer
