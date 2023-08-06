@@ -13,7 +13,7 @@ function FeedbackBar({
   open, severity, message, handleClose,
 }) {
   let feedbackMessage = message;
-  if (message === 'Failed to fetch') feedbackMessage = 'Your order can\'t be saved at the moment. Try again later.';
+  if (message === 'Failed to fetch') feedbackMessage = 'The server is unavailable at the moment. Try again later.';
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>

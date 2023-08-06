@@ -1,13 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import OrderCartItem from './OrderCartItem';
 import { getMenuItemById } from '../store/menu';
+import { deleteOrder } from '../store/order';
 
 function OrderItem({ orderItem, nr }) {
+  const dispatch = useDispatch();
   const orderQuantities = orderItem.cart.map((cartItem) => cartItem.quantity);
   const orderItemIds = orderItem.cart.map((cartItem) => cartItem.menuItemId);
   const orderItemPrices = orderItemIds.map(
@@ -20,9 +24,14 @@ function OrderItem({ orderItem, nr }) {
   return (
     <Card sx={{ minWidth: 275, my: 2 }}>
       <CardContent>
-        <Typography variant="h6" component="div" sx={{ pb: 1 }}>
-          {`Order nr. ${nr}`}
-        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="h6" component="div" sx={{ pb: 1 }}>
+            {`Order nr. ${nr}`}
+          </Typography>
+          <IconButton aria-label="delete" onClick={() => (dispatch(deleteOrder(orderItem._id)))}>
+            <DeleteIcon />
+          </IconButton>
+        </Box>
         {orderItem.cart.map((cartItem) => (
           <OrderCartItem
             cartItem={cartItem}

@@ -1,22 +1,34 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 import OrderItem from '../components/OrderItem';
 import Spinner from '../components/Spinner';
-import { loadOrder } from '../store/order';
+import FeedbackBar from '../components/FeedbackBar';
+import { loadOrder, resetFeedback } from '../store/order';
 import { loadMenu } from '../store/menu';
 
 function OrdersPage() {
   const dispatch = useDispatch();
-  const { orderItems, loading } = useSelector((state) => state.order);
-  const menuItems = useSelector((state) => state.menu.menuItems);
+  const { orderItems, loading, feedback } = useSelector((state) => state.order);
+  const isMenuFetched = useSelector((state) => state.menu.lastFetch);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
 
   useEffect(() => {
-    if (!menuItems.length) dispatch(loadMenu());
+    if (!isMenuFetched) dispatch(loadMenu());
     dispatch(loadOrder());
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(feedback).length) setFeedbackOpen(true);
+  }, [feedback]);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setFeedbackOpen(false);
+    setTimeout(() => dispatch(resetFeedback()), 1000);
+  };
 
   return (
     <>
@@ -32,8 +44,14 @@ function OrdersPage() {
             />
           ))}
         {(!orderItems.length && !loading)
-          && <Alert severity="error" sx={{ my: 2 }}>Orders aren&apos;t available at the moment. Try again later.</Alert>}
+          && <Alert severity="error" sx={{ my: 2 }}> There aren&apos;t orders.</Alert>}
       </Container>
+      <FeedbackBar
+        open={feedbackOpen}
+        severity={feedback.severity}
+        message={feedback.message}
+        handleClose={handleClose}
+      />
     </>
   );
 }

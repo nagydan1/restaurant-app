@@ -8,6 +8,7 @@ const slice = createSlice({
   initialState: {
     orderItems: [],
     loading: false,
+    feedback: {},
   },
   reducers: {
     orderRequested: (order) => {
@@ -18,16 +19,36 @@ const slice = createSlice({
       order.loading = false;
       order.lastFetch = Date.now();
     },
-    orderRequestFailed: (order) => {
+    orderRequestFailed: (order, action) => {
       order.loading = false;
+      order.feedback = {
+        severity: 'error',
+        message: action.payload.message,
+      };
+    },
+    orderDeleted: (order, action) => {
+      order.orderItems = order.orderItems.filter(
+        (orderItem) => orderItem._id !== action.payload._id,
+      );
+      order.loading = false;
+      order.feedback = {
+        severity: 'success',
+        message: action.payload.message,
+      };
+    },
+    resetFeedback: (order) => {
+      order.feedback = {};
     },
   },
 });
 
+export const { resetFeedback } = slice.actions;
 export default slice.reducer;
 
 // Action Creators
-const { orderRecieved, orderRequested, orderRequestFailed } = slice.actions;
+const {
+  orderRecieved, orderRequested, orderRequestFailed, orderDeleted,
+} = slice.actions;
 
 export const loadOrder = () => (dispatch) => {
   dispatch(
@@ -36,6 +57,18 @@ export const loadOrder = () => (dispatch) => {
       method: 'GET',
       onStart: orderRequested.type,
       onSuccess: orderRecieved.type,
+      onError: orderRequestFailed.type,
+    }),
+  );
+};
+
+export const deleteOrder = (orderItemId) => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: ORDER_URL + orderItemId,
+      method: 'DELETE',
+      onStart: orderRequested.type,
+      onSuccess: orderDeleted.type,
       onError: orderRequestFailed.type,
     }),
   );
