@@ -4,18 +4,16 @@ import Button from '@mui/material/Button';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { allItemsRemoved } from '../store/cart';
+import * as utils from '../utils';
 
 function CartTotalRow({ items }) {
   const dispatch = useDispatch();
   const menu = useSelector((state) => state.menu.menuItems);
-  const cartItemIds = items.map((cartItem) => cartItem.menuItemId);
-  const cartItemQuantities = items.map((cartItem) => cartItem.quantity);
+  const cartItemIds = utils.getMenuItemIdsArray(items);
+  const cartItemQuantities = utils.getQuantitiesArray(items);
   const cartItemPrices = cartItemIds.map((id) => menu.find((item) => item._id === id).price);
-
   const totalQuantity = cartItemQuantities.reduce((a, b) => a + b, 0);
-  const totalPrice = cartItemQuantities
-    .map((quantity, index) => quantity * cartItemPrices[index])
-    .reduce((a, b) => a + b, 0);
+  const totalPrice = utils.calculateTotalPrice(cartItemQuantities, cartItemPrices);
 
   return (
     <TableRow

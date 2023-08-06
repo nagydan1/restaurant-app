@@ -44,7 +44,7 @@ function OrdersPage() {
             />
           ))}
         {(!orderItems.length && !loading)
-          && <Alert severity="error" sx={{ my: 2 }}> There aren&apos;t orders.</Alert>}
+          && <Alert severity="error" sx={{ my: 2 }}> There isn&apos;t any order.</Alert>}
       </Container>
       <FeedbackBar
         open={feedbackOpen}

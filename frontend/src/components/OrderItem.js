@@ -9,17 +9,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import OrderCartItem from './OrderCartItem';
 import { getMenuItemById } from '../store/menu';
 import { deleteOrder } from '../store/order';
+import * as utils from '../utils';
 
 function OrderItem({ orderItem, nr }) {
   const dispatch = useDispatch();
-  const orderQuantities = orderItem.cart.map((cartItem) => cartItem.quantity);
-  const orderItemIds = orderItem.cart.map((cartItem) => cartItem.menuItemId);
+  const orderQuantities = utils.getQuantitiesArray(orderItem.cart);
+  const orderItemIds = utils.getMenuItemIdsArray(orderItem.cart);
   const orderItemPrices = orderItemIds.map(
     (id) => getMenuItemById(id)(useSelector((state) => state.menu))[0].price,
   );
-  const totalPrice = orderQuantities
-    .map((quantity, index) => quantity * orderItemPrices[index])
-    .reduce((a, b) => a + b, 0);
+  const totalPrice = utils.calculateTotalPrice(orderQuantities, orderItemPrices);
 
   return (
     <Card sx={{ minWidth: 275, my: 2 }}>
