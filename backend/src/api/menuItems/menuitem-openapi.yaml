@@ -1,0 +1,35 @@
+paths:
+  /api/menu:
+    get:
+      summary: 'Get menu'
+      tags:
+        - api
+      responses:
+        200:
+          description: 'List of menu items'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/menuItemsRes'
+
+components:
+  schemas:
+    menuItemsRes:
+      type: object
+      properties:
+        menuItems:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              category:
+                type: string
+                enum: ['starter', 'salad', 'meat', 'fish', 'pasta', 'pizza']
+              price:
+                type: number
