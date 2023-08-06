@@ -18,6 +18,15 @@ const orderController = {
       next(error);
     }
   },
+  async delete(req, res, next) {
+    try {
+      const deleted = await orderService.deleteOrder(req);
+      const message = deleted.acknowledged ? 'Deleted successfully' : 'Deletion failed';
+      res.status(200).json({ message, _id: deleted._id });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 export default orderController;
