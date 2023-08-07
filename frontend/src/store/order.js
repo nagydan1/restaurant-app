@@ -52,7 +52,7 @@ const {
 } = slice.actions;
 
 export const loadOrder = () => (dispatch) => {
-  dispatch(
+  return dispatch(
     apiCallBegan({
       url: ORDER_URL,
       method: 'GET',
@@ -64,7 +64,7 @@ export const loadOrder = () => (dispatch) => {
 };
 
 export const deleteOrder = (orderItemId) => (dispatch) => {
-  dispatch(
+  return dispatch(
     apiCallBegan({
       url: ORDER_URL + orderItemId,
       method: 'DELETE',

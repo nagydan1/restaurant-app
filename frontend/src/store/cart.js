@@ -72,7 +72,7 @@ export const getCartCount = createSelector(
 const { cartSaved, cartSaveFailed } = slice.actions;
 
 export const sendOrder = () => (dispatch, getState) => {
-  dispatch(
+  return dispatch(
     apiCallBegan({
       url: ORDER_URL,
       method: 'POST',

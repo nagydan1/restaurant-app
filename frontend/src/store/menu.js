@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+/* eslint-disable consistent-return */
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import moment from 'moment';
 import { apiCallBegan } from './api';
@@ -42,7 +43,7 @@ export const loadMenu = () => (dispatch, getState) => {
   const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
   if (diffInMinutes < 100) return;
 
-  dispatch(
+  return dispatch(
     apiCallBegan({
       url: MENU_URL,
       method: 'GET',
